@@ -1,4 +1,4 @@
-name: Build and push Docker images to GitHub Packages
+name: Publish API client
 
 on:
   push:
@@ -41,4 +41,4 @@ jobs:
           command-args: "--api-package com.joranbergfeld.airport-system.airliner.client.api --model-package com.joranbergfeld.airport-system.airliner.client.model --invoker-package com.joranbergfeld.airport-system.airliner.client.invoker --group-id com.joranbergfeld.airport-system --artifact-id airliner-api.client --artifact-version ${{ github.sha }} --library resttemplate -o airliner-client"
 
       - name: Deploy client to nexus
-        run: sed -i "/<spring-web-version>/s/>.*</>6.0.7</" pom.xml && mvn deploy -DaltDeploymentRepository=nexus::default::${{ secrets.NEXUS_URL }}
+        run: cd airliner-client && sed -i "/<spring-web-version>/s/>.*</>6.0.7</" pom.xml && mvn deploy -DaltDeploymentRepository=nexus::default::${{ secrets.NEXUS_URL }}
